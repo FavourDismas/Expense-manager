@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="dashboard-header">
+    <h1>Finance Dashboard</h1>
+    <div class="header-actions">
+      <button id="themeToggle" class="btn">🌙 Dark Mode</button>
+      <button id="logoutBtn" class="btn">Logout</button>
+    </div>
+  </header>
+
+  <main class="dashboard-container">
+
+    <!-- Summary -->
+   <div class="summary">
+  <h3>Summary</h3>
+  <div class="summary-section">
+    <h4>Expenses</h4>
+    <div class="summary-cards">
+      <div class="card">Daily: <span id="expDaily">0</span></div>
+      <div class="card">Weekly: <span id="expWeekly">0</span></div>
+      <div class="card">Monthly: <span id="expMonthly">0</span></div>
+      <div class="card">Yearly: <span id="expYearly">0</span></div>
+    </div>
+  </div>
+
+  <div class="summary-section">
+    <h4>Income</h4>
+    <div class="summary-cards">
+      <div class="card">Daily: <span id="incDaily">0</span></div>
+      <div class="card">Weekly: <span id="incWeekly">0</span></div>
+      <div class="card">Monthly: <span id="incMonthly">0</span></div>
+      <div class="card">Yearly: <span id="incYearly">0</span></div>
+    </div>
+  </div>
+</div>
+
+
+    <!-- Forms -->
+    <section class="card">
+      <h2>Add Expense</h2>
+      <form id="expenseForm" class="form-grid">
+        <input type="text" id="item" placeholder="Item" required>
+        <input type="number" id="amount" placeholder="Amount" required>
+        <select id="category">
+          <option>Food</option>
+          <option>Transportation</option>
+          <option>Bills</option>
+          <option>Groceries</option>
+          <option>Others</option>
+        </select>
+        <input type="date" id="date" required>
+        <button type="submit" class="btn full-width">Add Expense</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Add Income</h2>
+      <form id="incomeForm" class="form-grid">
+        <input type="text" id="incomeSource" placeholder="Source" required>
+        <input type="number" id="incomeAmount" placeholder="Amount" required>
+        <input type="date" id="incomeDate" required>
+        <button type="submit" class="btn full-width">Add Income</button>
+      </form>
+    </section>
+
+    <!-- Expenses -->
+    <section class="card table-card">
+      <h2>Expenses</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Item</th><th>Category</th><th>Amount</th><th>Date</th></tr>
+          </thead>
+          <tbody id="expensesList"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Income -->
+    <section class="card table-card">
+      <h2>Income</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Source</th><th>Amount</th><th>Date</th></tr>
+          </thead>
+          <tbody id="incomeList"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Charts -->
+    <section class="card chart-card">
+      <h2>Expenses by Category</h2>
+      <canvas id="categoryChart"></canvas>
+    </section>
+
+    <section class="card chart-card">
+      <h2>Monthly Expenses</h2>
+      <canvas id="monthlyChart"></canvas>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
