@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finance Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const { data } = await supabaseClient.auth.getSession();
+    if (!data.session) {
+      window.location.href = "login.html";
+    }
+  });
+</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+  <header class="dashboard-header">
+    <h1>Finance Dashboard</h1>
+    <div class="header-actions">
+      <button id="themeToggle" class="btn">🌙 Dark Mode</button>
+      <button id="logoutBtn" class="btn">Logout</button>
+    </div>
+  </header>
+
+
+  <!-- ===== MENU BUTTON ===== -->
+  <button id="menuToggle" class="menu-btn">☰</button>
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar" id="sidebar">
+    <h2>Menu</h2>
+    <ul>
+      <li data-section="summary">Summary</li>
+      <li data-section="add-expense">Add Expense</li>
+      <li data-section="add-income">Add Income</li>
+      <li data-section="expenses-list">Expenses List</li>
+      <li data-section="income-list">Income List</li>
+      <li data-section="charts">Charts</li>
+    </ul>
+  </aside>
+
+
+  <!-- ===== CURRENCY SELECTOR ===== -->
+  <div class="currency-selector">
+    <label for="currency">Currency:</label>
+    <select id="currency">
+      <option value="GHS">GHS (Cedi)</option>
+      <option value="USD">USD (Dollar)</option>
+      <option value="EUR">EUR (Euro)</option>
+    </select>
+  </div>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="dashboard-container">
+
+    <!-- === SUMMARY === -->
+    <section id="summary" class="content-section">
+      <h3>Summary</h3>
+      <div class="summary-section">
+        <h4>Expenses</h4>
+        <div class="summary-cards">
+          <div class="card">Daily: <span id="expDaily">0</span></div>
+          <div class="card">Weekly: <span id="expWeekly">0</span></div>
+          <div class="card">Monthly: <span id="expMonthly">0</span></div>
+          <div class="card">Yearly: <span id="expYearly">0</span></div>
+        </div>
+      </div>
+      <div class="summary-section">
+        <h4>Income</h4>
+        <div class="summary-cards">
+          <div class="card">Daily: <span id="incDaily">0</span></div>
+          <div class="card">Weekly: <span id="incWeekly">0</span></div>
+          <div class="card">Monthly: <span id="incMonthly">0</span></div>
+          <div class="card">Yearly: <span id="incYearly">0</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- === ADD EXPENSE === -->
+    <section id="add-expense" class="content-section hidden">
+      <div class="card">
+        <h2>Add Expense</h2>
+        <form id="expenseForm" class="form-grid">
+          <input type="text" id="item" placeholder="Item" required>
+          <input type="number" id="amount" placeholder="Amount" required>
+          <select id="category">
+            <option>Food</option>
+            <option>Transportation</option>
+            <option>Bills</option>
+            <option>Groceries</option>
+            <option>Others</option>
+          </select>
+          <input type="date" id="date" required>
+          <button type="submit" class="btn full-width">Add Expense</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- === ADD INCOME === -->
+    <section id="add-income" class="content-section hidden">
+      <div class="card">
+        <h2>Add Income</h2>
+        <form id="incomeForm" class="form-grid">
+          <input type="text" id="incomeSource" placeholder="Source" required>
+          <input type="number" id="incomeAmount" placeholder="Amount" required>
+          <select id="incomeCategory">
+            <option>Salary</option>
+            <option>Business</option>
+            <option>Loan</option>
+            <option>Others</option>
+          </select>
+          <input type="date" id="incomeDate" required>
+          <button type="submit" class="btn full-width">Add Income</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- === EXPENSES TABLE === -->
+    <section id="expenses-list" class="content-section hidden">
+      <div class="table-card">
+        <h2>Expenses List</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Category</th>
+              <th>Amount</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="expensesList"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- === INCOME TABLE === -->
+    <section id="income-list" class="content-section hidden">
+      <div class="table-card">
+        <h2>Income List</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Source</th>
+              <th>Category</th>
+              <th>Amount</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="incomeList"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- === CHARTS === -->
+    <section id="charts" class="content-section hidden">
+      <div class="graph-card">
+        <h2>Expenses by Category</h2>
+        <canvas id="categoryChart"></canvas>
+      </div>
+      <div class="graph-card">
+        <h2>Monthly Expenses</h2>
+        <canvas id="monthlyChart"></canvas>
+      </div>
+    </section>
+
+  </main>
+
+ <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+</body>
+</html>
